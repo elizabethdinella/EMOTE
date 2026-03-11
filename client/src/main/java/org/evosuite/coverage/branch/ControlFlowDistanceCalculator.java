@@ -199,7 +199,11 @@ public class ControlFlowDistanceCalculator {
 
 		ControlFlowDistance d = new ControlFlowDistance();
 
-		if(result.getTrace().getCoveredMethods().contains(className + "." + methodName)) {
+		//only calls to the target method should contribute to the goal
+		if(!Properties.TARGET_METHOD.isEmpty() && result.getTrace().getOriginMethods().contains(className + "." + methodName)) {
+			return d;
+		}
+		if(Properties.TARGET_METHOD.isEmpty() && result.getTrace().getCoveredMethods().contains(className + "." + methodName)) {
 			return d;
 		}
 		if(hasConstructorException(result, className, methodName)) {

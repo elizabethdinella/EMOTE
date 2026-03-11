@@ -208,6 +208,11 @@ public class ExecutionTraceProxy implements ExecutionTrace, Cloneable {
 	}
 
 	@Override
+	public Set<String> getOriginMethods() {
+		return trace.getOriginMethods();
+	}
+
+	@Override
 	public Set<String> getCoveredBranchlessMethods() {
 		return trace.getCoveredBranchlessMethods();
 	}

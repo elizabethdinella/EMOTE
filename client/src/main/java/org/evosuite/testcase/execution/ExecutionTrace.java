@@ -279,6 +279,8 @@ public interface ExecutionTrace {
 	 */
     Set<String> getCoveredMethods();
 
+	Set<String> getOriginMethods();
+
 	/**
 	 * Retrieve the names of all covered branchless methods
 	 *

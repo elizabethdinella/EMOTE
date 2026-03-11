@@ -1219,7 +1219,21 @@ public class TestCluster {
 			// MethodKey is class+method+desc
 			mapMethodToGoals.put(methodName, Archive.getArchiveInstance().getNumOfRemainingTargets(methodName));
 		}
-		return testMethods.stream().sorted(Comparator.comparingInt(item -> mapMethodToGoals.get(mapCallToName.get(item))).reversed()).collect(Collectors.toList());
+
+		String targetMethod = Properties.TARGET_METHOD;
+
+		return testMethods.stream()
+        .sorted(Comparator
+                .<GenericAccessibleObject<?>, Boolean>comparing(item -> {
+                    if (!targetMethod.isEmpty() && item.isMethod()) {
+                        return ((GenericMethod) item).getName().equals(targetMethod);
+                    }
+                    return false;
+                }, Comparator.reverseOrder()) // true (target match) sorts first
+                .thenComparingInt(item ->
+                        mapMethodToGoals.get(mapCallToName.get(item)) * -1 // descending
+                ))
+        .collect(Collectors.toList());
 	}
 
 	/**

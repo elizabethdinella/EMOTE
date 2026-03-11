@@ -225,6 +225,8 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 	public Map<Integer, Integer> coveredFalse = Collections.synchronizedMap(new HashMap<>());
 
 	public Map<String, Integer> coveredMethods = Collections.synchronizedMap(new HashMap<>());
+	public Map<String, Integer> originMethods = Collections.synchronizedMap(new HashMap<>());
+
 
 	public Map<String, Integer> coveredBranchlessMethods = Collections.synchronizedMap(new HashMap<>());
 
@@ -579,6 +581,7 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 		mutantDistances = new HashMap<>();
 		touchedMutants = new HashSet<>();
 		coveredMethods = new HashMap<>();
+		originMethods = new HashMap<>();
 		coveredBranchlessMethods = new HashMap<>();
 		coveredPredicates = new HashMap<>();
 		coveredTrue = new HashMap<>();
@@ -625,6 +628,7 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 		copy.trueDistances.putAll(trueDistances);
 		copy.falseDistances.putAll(falseDistances);
 		copy.coveredMethods.putAll(coveredMethods);
+		copy.originMethods.putAll(originMethods);
 		copy.coveredBranchlessMethods.putAll(coveredBranchlessMethods);
 		copy.coveredPredicates.putAll(coveredPredicates);
 		copy.coveredTrue.putAll(coveredTrue);
@@ -718,8 +722,16 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 	public void enteredMethod(String className, String methodName, Object caller) {
 		if (traceCoverage) {
 			String id = className + "." + methodName;
+			
+				if (stack.size() == 1 && !originMethods.containsKey(id)) {
+					originMethods.put(id, 1);
+				} else if (stack.size() == 1 && originMethods.containsKey(id)) {
+					originMethods.put(id, originMethods.get(id) + 1);
+				}
+
 			if (!coveredMethods.containsKey(id)) {
 				coveredMethods.put(id, 1);
+
 			} else {
 				coveredMethods.put(id, coveredMethods.get(id) + 1);
 			}
@@ -745,7 +757,7 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 					int branchId = -1;
 					double trueDist = 1.0;
 					double falseDist = 0.0;
-					String originMethod = stack.get(stack.size()-2).methodName;
+					String originMethod = stack.size() >= 2 ? stack.get(stack.size()-2).methodName : "";
 					call.branchTraces.add(new BranchTrace(-1, originMethod, trueDist, falseDist));
 					
 					call.defuseCounterTrace.add(duCounter);
@@ -948,6 +960,11 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 	@Override
 	public Set<String> getCoveredMethods() {
 		return coveredMethods.keySet();
+	}
+
+	@Override
+	public Set<String> getOriginMethods() {
+		return originMethods.keySet();
 	}
 
 	@Override

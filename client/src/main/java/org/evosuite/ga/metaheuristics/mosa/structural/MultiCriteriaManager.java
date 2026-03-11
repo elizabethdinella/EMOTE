@@ -389,7 +389,7 @@ public class MultiCriteriaManager extends StructuralGoalManager implements Seria
 
 		// If the test failed to execute properly, or if the test does not cover anything,
     	// it means none of the current gaols could be reached.
-		if (result.hasTimeout() || result.hasTestException() || result.getTrace().getCoveredLines().size() == 0){
+		if (result.hasTimeout() || result.hasTestException() || result.getTrace().getCoveredMethods().size() == 0){
       		currentGoals.forEach(f -> c.setFitness(f, Double.MAX_VALUE)); // assume minimization
 			return;
 		}
