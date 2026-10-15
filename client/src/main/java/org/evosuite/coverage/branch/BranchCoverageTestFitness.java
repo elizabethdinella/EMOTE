@@ -159,10 +159,10 @@ public class BranchCoverageTestFitness extends TestFitnessFunction {
 	 */
 	@Override
 	public double getFitness(TestChromosome individual, ExecutionResult result) {
-		logger.error("Getting distance for test: " + individual.toString());
+		//logger.error("Getting distance for test: " + individual.toString());
 		ControlFlowDistance distance = goal.getDistance(result);
 
-		logger.error("Distance for goal: " + goal.toString() + " for test: " + individual.toString() + " is " + String.valueOf(distance.getResultingBranchFitness()));
+		//logger.error("Distance for goal: " + goal.toString() + " for test: " + individual.toString() + " is " + String.valueOf(distance.getResultingBranchFitness()));
 
 		double fitness = distance.getResultingBranchFitness();
 
