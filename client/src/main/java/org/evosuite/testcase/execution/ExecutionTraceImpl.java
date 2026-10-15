@@ -903,7 +903,7 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 		for (Entry<Integer, Distance> entry : falseDistances.entrySet()) {
 			logger.error(Properties.TARGET_METHOD + " " + entry.getValue().originMethod + " " + String.valueOf(!Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)));
 
-			if (!Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)) {
+			if (false && !Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)) {
 				continue;
 			}
 
@@ -994,8 +994,8 @@ public class ExecutionTraceImpl implements ExecutionTrace, Cloneable {
 		Set<Integer> covered = new HashSet<>();
 
 		for (Entry<Integer, Distance> entry : trueDistances.entrySet()) {
-			logger.error(Properties.TARGET_METHOD + " " + entry.getValue().originMethod + " " + String.valueOf(!Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)));
-			if (!Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)) {
+			//logger.error(Properties.TARGET_METHOD + " " + entry.getValue().originMethod + " " + String.valueOf(!Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)));
+			if (false && !Properties.TARGET_METHOD.isEmpty() && !entry.getValue().originMethod.equals(Properties.TARGET_METHOD)) {
 				continue;
 			}
 

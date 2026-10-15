@@ -200,10 +200,10 @@ public class ControlFlowDistanceCalculator {
 		ControlFlowDistance d = new ControlFlowDistance();
 
 		//only calls to the target method should contribute to the goal
-		if(!Properties.TARGET_METHOD.isEmpty() && result.getTrace().getOriginMethods().contains(className + "." + methodName)) {
+		if(false && !Properties.TARGET_METHOD.isEmpty() && result.getTrace().getOriginMethods().contains(className + "." + methodName)) {
 			return d;
 		}
-		if(Properties.TARGET_METHOD.isEmpty() && result.getTrace().getCoveredMethods().contains(className + "." + methodName)) {
+		if(result.getTrace().getCoveredMethods().contains(className + "." + methodName)) {
 			return d;
 		}
 		if(hasConstructorException(result, className, methodName)) {
@@ -290,7 +290,7 @@ public class ControlFlowDistanceCalculator {
 				BranchTrace branchTrace = branchTraces.get(branchTracePosition);
 
 				//only calls to the target method should contribute to the goal
-				if (!Properties.TARGET_METHOD.isEmpty() && !branchTrace.originMethod.equals(Properties.TARGET_METHOD)) {
+				if (false && !Properties.TARGET_METHOD.isEmpty() && !branchTrace.originMethod.equals(Properties.TARGET_METHOD)) {
 					continue;
 				}
 
